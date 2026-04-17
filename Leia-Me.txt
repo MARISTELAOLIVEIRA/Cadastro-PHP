@@ -1,0 +1,96 @@
+Sistema de Cadastro e Login em PHP
+===================================
+
+Projeto didático desenvolvido para aulas de PHP, demonstrando
+um sistema básico de autenticação utilizando SQLite 3 como banco
+de dados e PDO como camada de acesso a dados.
+
+
+ARQUIVOS DO PROJETO
+-------------------
+
+index.php
+  Ponto de entrada da aplicação.
+  Verifica se há uma sessão ativa e redireciona o usuário para o
+  dashboard (se logado) ou para a tela de login (se não logado).
+
+db.php
+  Responsável pela conexão com o banco de dados SQLite via PDO.
+  Cria o arquivo database.db automaticamente na primeira execução
+  e garante que a tabela "usuarios" exista com os campos:
+    - id         (chave primária, autoincremento)
+    - nome       (texto, obrigatório)
+    - email      (texto, único, obrigatório)
+    - senha      (hash bcrypt, obrigatório)
+    - criado_em  (data/hora do cadastro)
+
+cadastro.php
+  Exibe o formulário de cadastro e processa o envio.
+  Validações realizadas:
+    - Todos os campos obrigatórios preenchidos
+    - Formato de e-mail válido
+    - Senha com mínimo de 6 caracteres
+    - Confirmação de senha idêntica à senha informada
+    - E-mail não duplicado no banco
+  A senha é armazenada como hash seguro usando password_hash()
+  com o algoritmo bcrypt (PASSWORD_DEFAULT).
+
+login.php
+  Exibe o formulário de login e processa a autenticação.
+  Busca o usuário pelo e-mail e valida a senha com password_verify().
+  Em caso de sucesso, inicia a sessão com o ID e nome do usuário
+  e regenera o ID de sessão para evitar session fixation.
+
+dashboard.php
+  Área restrita acessível somente a usuários autenticados.
+  Verifica a sessão no início da página; redireciona para login.php
+  caso não haja sessão ativa.
+  Exibe os dados do usuário logado (id, nome, e-mail, data de cadastro)
+  buscados diretamente do banco de dados.
+
+logout.php
+  Encerra a sessão do usuário de forma segura:
+    - Remove todas as variáveis de sessão ($_SESSION = [])
+    - Apaga o cookie de sessão no navegador
+    - Destrói a sessão no servidor com session_destroy()
+  Redireciona para login.php após o logout.
+
+
+CONCEITOS DE PHP ABORDADOS
+---------------------------
+
+  - PDO (PHP Data Objects) para acesso ao banco de dados
+  - Prepared Statements para prevenção de SQL Injection
+  - password_hash() e password_verify() para senhas seguras (bcrypt)
+  - session_start(), $_SESSION e session_destroy() para sessões
+  - session_regenerate_id() para prevenção de session fixation
+  - filter_var() com FILTER_VALIDATE_EMAIL para validação de e-mail
+  - htmlspecialchars() para prevenção de XSS na exibição de dados
+  - header('Location: ...') para redirecionamentos HTTP
+  - $_SERVER['REQUEST_METHOD'] para distinguir GET de POST
+  - Operador de coalescência nula (??) para valores padrão
+
+
+COMO EXECUTAR
+-------------
+
+Requisitos:
+  - PHP 7.4 ou superior com extensão pdo_sqlite habilitada
+
+Passos:
+  1. Abra o terminal na pasta do projeto
+  2. Execute: php -S localhost:8000
+  3. Acesse no navegador: http://localhost:8000
+
+O arquivo database.db será criado automaticamente na primeira
+requisição ao sistema.
+
+
+SEGURANÇA
+---------
+
+  - Senhas nunca são armazenadas em texto puro
+  - Todas as entradas do usuário são tratadas antes de exibição
+  - Consultas SQL usam parâmetros vinculados (bind parameters)
+  - Sessões são regeneradas após autenticação bem-sucedida
+  - Páginas restritas verificam a sessão a cada requisição
