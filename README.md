@@ -98,6 +98,7 @@ Ao final da atividade, o(a) aluno(a) deve ser capaz de:
 ```bash
 php -S localhost:8000
 ```
+Ou coloque a pasta do projeto no diretório do servidor Web (se for o Xampp: c:xampp/htdocs
 
 3. Abra no navegador:
 
