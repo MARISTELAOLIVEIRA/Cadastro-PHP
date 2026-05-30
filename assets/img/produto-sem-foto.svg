@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Imagem indisponivel</title>
+  <desc id="desc">Placeholder de produto sem foto</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <g fill="none" stroke="#e2e8f0" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
+    <rect x="220" y="130" width="360" height="240" rx="20"/>
+    <path d="M250 320l85-90 75 70 60-55 80 75"/>
+    <circle cx="335" cy="205" r="28"/>
+  </g>
+  <text x="400" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" fill="#e2e8f0">
+    Produto sem foto
+  </text>
+</svg>

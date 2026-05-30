@@ -14,6 +14,8 @@ if (isset($_SESSION['usuario_id'])) {
 require_once 'db.php';
 
 $erro = '';
+$sucesso = $_SESSION['flash_sucesso'] ?? '';
+unset($_SESSION['flash_sucesso']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Recupera e sanitiza os dados do formulário
@@ -34,7 +36,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_regenerate_id(true);
             $_SESSION['usuario_id'] = $usuario['id'];
             $_SESSION['usuario_nome'] = $usuario['nome'];
-            header('Location: dashboard.php');
+            $_SESSION['usuario_is_admin'] = (int) ($usuario['is_admin'] ?? 0);
+
+            $destino = 'dashboard.php';
+            if (!empty($_SESSION['redirect_pos_login'])) {
+                $destino = $_SESSION['redirect_pos_login'];
+                unset($_SESSION['redirect_pos_login']);
+            }
+
+            header('Location: ' . $destino);
             exit;
         } else {
             $erro = 'E-mail ou senha inválidos.';
@@ -59,6 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php if ($erro): ?>
                 <div class="alert alert-danger"><?= htmlspecialchars($erro) ?></div>
+            <?php endif; ?>
+
+            <?php if ($sucesso): ?>
+                <div class="alert alert-success"><?= htmlspecialchars($sucesso) ?></div>
             <?php endif; ?>
 
             <form method="post" action="login.php" novalidate>

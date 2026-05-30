@@ -1,0 +1,5 @@
+database.db
+.DS_Store
+
+uploads/produtos/*
+!uploads/produtos/.gitkeep

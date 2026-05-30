@@ -25,6 +25,9 @@ if (!$usuario) {
     header('Location: login.php');
     exit;
 }
+
+$isAdmin = (int) ($usuario['is_admin'] ?? 0) === 1;
+$_SESSION['usuario_is_admin'] = $isAdmin ? 1 : 0;
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -38,7 +41,7 @@ if (!$usuario) {
 
 <nav class="navbar navbar-dark bg-primary">
     <div class="container">
-        <span class="navbar-brand mb-0 h1">Sistema de Cadastro PHP</span>
+        <span class="navbar-brand mb-0 h1">EcoArte Tech Store</span>
         <a href="logout.php" class="btn btn-outline-light btn-sm">Sair</a>
     </div>
 </nav>
@@ -47,7 +50,18 @@ if (!$usuario) {
     <div class="card shadow-sm">
         <div class="card-body">
             <h5 class="card-title">Bem-vindo, <?= htmlspecialchars($usuario['nome']) ?>!</h5>
-            <p class="card-text text-muted">Você está autenticado com sucesso.</p>
+            <p class="card-text text-muted">Sua conta esta pronta para comprar arte feita com tecnologia reciclada.</p>
+
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <a href="loja.php" class="btn btn-success">Ver catalogo</a>
+                <a href="carrinho.php" class="btn btn-outline-primary">Carrinho</a>
+                <a href="meus_pedidos.php" class="btn btn-outline-dark">Meus pedidos</a>
+                <a href="perfil.php" class="btn btn-outline-secondary">Meu perfil</a>
+                <?php if ($isAdmin): ?>
+                    <a href="admin_produtos.php" class="btn btn-warning">Cadastrar produto</a>
+                <?php endif; ?>
+            </div>
+
             <hr>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">

@@ -6,10 +6,10 @@
 session_start();
 
 // Redireciona para o dashboard se já estiver logado,
-// ou para o login caso contrário
+// ou para a loja publica caso contrário
 if (isset($_SESSION['usuario_id'])) {
     header('Location: dashboard.php');
 } else {
-    header('Location: login.php');
+    header('Location: loja.php');
 }
 exit;

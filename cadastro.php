@@ -13,7 +13,6 @@ if (isset($_SESSION['usuario_id'])) {
 require_once 'db.php';
 
 $erro  = '';
-$sucesso = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome  = trim($_POST['nome']  ?? '');
@@ -44,16 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hash = password_hash($senha, PASSWORD_DEFAULT);
 
             $insert = $pdo->prepare('
-                INSERT INTO usuarios (nome, email, senha)
-                VALUES (:nome, :email, :senha)
+                INSERT INTO usuarios (nome, email, senha, is_admin)
+                VALUES (:nome, :email, :senha, :is_admin)
             ');
             $insert->execute([
                 ':nome'  => $nome,
                 ':email' => $email,
                 ':senha' => $hash,
+                ':is_admin' => 0,
             ]);
 
-            $sucesso = 'Cadastro realizado com sucesso! Você já pode fazer login.';
+            $_SESSION['flash_sucesso'] = 'Cadastro realizado com sucesso! Agora faca login.';
+            header('Location: login.php');
+            exit;
         }
     }
 }
@@ -75,13 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php if ($erro): ?>
                 <div class="alert alert-danger"><?= htmlspecialchars($erro) ?></div>
-            <?php endif; ?>
-
-            <?php if ($sucesso): ?>
-                <div class="alert alert-success">
-                    <?= htmlspecialchars($sucesso) ?>
-                    <a href="login.php">Ir para o login</a>
-                </div>
             <?php endif; ?>
 
             <form method="post" action="cadastro.php" novalidate>

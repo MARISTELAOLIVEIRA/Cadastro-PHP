@@ -6,6 +6,8 @@
 Seja bem-vindo(a) ao repositorio do sistema de cadastro e login!
 Aqui a ideia e aprender **PHP na pratica**, sem drama, sem servidor de banco pesado e sem perder o bom humor.
 
+Agora o projeto tambem inclui um **mini e-commerce** para venda de arte feita com lixo eletronico.
+
 Se algo der erro, respire fundo, tome agua e lembre: ate o ponto e virgula tem seus dias de protagonismo.
 
 ---
@@ -20,6 +22,9 @@ Este projeto foi criado para apoiar aulas introdutorias de desenvolvimento web c
 - Logout seguro
 - Persistencia de dados com SQLite3
 - Boas praticas de seguranca para iniciantes
+- Catalogo de produtos artisticos com reciclaveis eletronicos
+- Carrinho em sessao
+- Finalizacao de pedido e historico de compras
 
 ### Competencias desenvolvidas
 
@@ -56,9 +61,19 @@ Ao final da atividade, o(a) aluno(a) deve ser capaz de:
 - login.php: formulario e processamento de login
 - dashboard.php: area restrita para usuario autenticado
 - logout.php: encerramento da sessao
+- loja.php: catalogo publico de produtos
+- carrinho.php: carrinho e checkout
+- meus_pedidos.php: historico de pedidos do usuario
+- perfil.php: dados obrigatorios de entrega e faturamento
+- admin_produtos.php: cadastro de produtos com upload de imagem
 - db.php: conexao PDO e criacao da tabela de usuarios
 - database.db: banco SQLite criado automaticamente
 - Leia-Me.txt: documentacao resumida do sistema
+
+### Pasta de imagens
+
+- uploads/produtos/: imagens enviadas no cadastro de produtos
+- assets/img/produto-sem-foto.svg: imagem padrao para fallback
 
 ---
 
@@ -70,6 +85,21 @@ Ao final da atividade, o(a) aluno(a) deve ser capaz de:
 4. Usuario faz login com email e senha
 5. Sessao e criada e usuario acessa o dashboard
 6. Ao sair, sessao e encerrada com seguranca
+
+### Fluxo do e-commerce
+
+1. Visitante acessa a loja publica
+2. Adiciona pecas artisticas ao carrinho
+3. Usuario faz login para finalizar pedido
+4. Sistema exige CPF e endereco completos antes da finalizacao
+5. Sistema grava pedido e itens no SQLite
+6. Usuario acompanha pedidos na area "Meus pedidos"
+
+### Imagens dos produtos
+
+- O cadastro de produtos aceita upload de JPG, PNG, WEBP e GIF
+- As imagens sao salvas localmente na pasta uploads/produtos
+- Quando o produto nao tem imagem (ou o link falha), a loja usa imagem padrao automaticamente
 
 ---
 
